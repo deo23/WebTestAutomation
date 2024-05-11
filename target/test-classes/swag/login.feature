@@ -8,3 +8,9 @@ Feature: User Login
     When I enter my username and password
     And I click the login button
     Then I should be logged in successfully
+
+  Scenario: Failed login
+    Given I am on the login page
+    When I enter invalid username and/or password
+    And I click the login button
+    Then I should see an error message
