@@ -19,7 +19,7 @@ public class LoginSteps {
         System.out.println("Opening the login page...");
         try {
             // Setting up WebDriver for Chrome
-            System.setProperty("webdriver.chrome.driver", "D:/DEO/PPL/chromedriver.exe");
+            System.setProperty("webdriver.chrome.driver", "/home/dafanf/Downloads/ChromeDriver/chromedriver-linux64/chromedriver");
 
             // Launch Chrome browser
             driver = new ChromeDriver();
@@ -57,7 +57,7 @@ public class LoginSteps {
         }
     }
 
-    @When("I enter invalid username and/or password")
+    @When("I enter invalid username and\\/or password")
     public void i_enter_invalid_username_and_password() {
         System.out.println("Entering invalid username and/or password...");
         try {
@@ -82,16 +82,16 @@ public class LoginSteps {
     }
 
     @Then("I should see an error message")
-public void i_should_see_an_error_message() {
-    System.out.println("Verifying error message...");
-    try {
-        // Verifying error message is displayed when login fails
-        boolean errorMessageDisplayed = driver.findElement(By.className("error-message-container")).isDisplayed();
-        Assert.assertTrue(errorMessageDisplayed);
-    } catch (Exception e) {
-        e.printStackTrace();
+    public void i_should_see_an_error_message() {
+        System.out.println("Verifying error message...");
+        try {
+            // Verifying error message is displayed when login fails
+            boolean errorMessageDisplayed = driver.findElement(By.className("error-message-container")).isDisplayed();
+            Assert.assertTrue(errorMessageDisplayed);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-}
 
 
     @After
