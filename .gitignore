@@ -1,2 +1,4 @@
 /target
 /chromedriver-win64
+/chromedriver-linux64
+/chromedriver-mac64
