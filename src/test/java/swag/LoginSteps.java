@@ -1,103 +1,110 @@
 package swag;
 
-import org.junit.Assert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-
+import com.swaglabs.pages.LoginPage;
 import io.cucumber.java.After;
 import io.cucumber.java.en.Given;
-import io.cucumber.java.en.When;
 import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+
+import java.io.IOException;
+
+import org.junit.Assert;
+import org.openqa.selenium.WebDriver;
 
 public class LoginSteps {
 
     private WebDriver driver;
+    private LoginPage loginPage;
+
+    // Add this method to the existing LoginSteps class
+    public WebDriver getDriver() {
+        return driver;
+    }
 
     @Given("I am on the login page")
     public void i_am_on_the_login_page() {
-        System.out.println("Opening the login page...");
         try {
-            // Setting up WebDriver for Chrome
-            System.setProperty("webdriver.chrome.driver", "/home/dafanf/Downloads/ChromeDriver/chromedriver-linux64/chromedriver");
-
-            // Launch Chrome browser
-            driver = new ChromeDriver();
-
-            // Navigate to the login page
+            // Automatically download and setup ChromeDriver for version 125.0.6422.60
+            ChromeDriverSetup.downloadAndExtractChromeDriver();
+            driver = ChromeDriverSetup.createWebDriver();
             driver.get("https://www.saucedemo.com/");
-
-            // Adding sleep to pause execution for 5 seconds (5000 milliseconds)
-            Thread.sleep(5000); // Sleep for 5 seconds
+            // Initialize the LoginPage object
+            loginPage = new LoginPage(driver);
+            System.out.println("LoginPage object initialized successfully.");
         } catch (Exception e) {
+            System.err.println("Error initializing LoginPage object: " + e.getMessage());
             e.printStackTrace();
         }
     }
 
     @When("I enter my username and password")
     public void i_enter_my_username_and_password() {
-        System.out.println("Entering username and password...");
-        try {
-            // Enter username and password
-            driver.findElement(By.id("user-name")).sendKeys("standard_user");
-            driver.findElement(By.id("password")).sendKeys("secret_sauce");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        loginPage.enterUsername("standard_user");
+        loginPage.enterPassword("secret_sauce");
     }
 
     @When("I click the login button")
     public void i_click_the_login_button() {
-        System.out.println("Clicking the login button...");
-        try {
-            // Click the login button
-            driver.findElement(By.id("login-button")).click();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        loginPage.clickLoginButton();
     }
 
     @When("I enter invalid username and\\/or password")
     public void i_enter_invalid_username_and_password() {
-        System.out.println("Entering invalid username and/or password...");
-        try {
-            // Enter invalid username and/or password
-            driver.findElement(By.id("user-name")).sendKeys("invalid_user");
-            driver.findElement(By.id("password")).sendKeys("invalid_password");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        loginPage.enterUsername("invalid_user");
+        loginPage.enterPassword("invalid_password");
+    }
+
+    @When("I enter my username and an unregistered password")
+    public void i_enter_my_username_and_an_unregistered_password() {
+        loginPage.enterUsername("standard_user");
+        loginPage.enterPassword("wrong_password");
+    }
+
+    @When("I enter an unregistered username and my password")
+    public void i_enter_an_unregistered_username_and_my_password() {
+        loginPage.enterUsername("wrong_user");
+        loginPage.enterPassword("secret_sauce");
+    }
+
+    @When("I leave the username field empty")
+    public void i_leave_the_username_field_empty() {
+        loginPage.enterUsername("");
+    }
+
+    @When("I enter my password")
+    public void i_enter_my_password() {
+        loginPage.enterPassword("secret_sauce");
+    }
+
+    @When("I leave the password field empty")
+    public void i_leave_the_password_field_empty() {
+        loginPage.enterPassword("");
+    }
+
+    @When("I enter my username")
+    public void i_enter_my_username() {
+        loginPage.enterUsername("standard_user");
+    }
+
+    @When("I leave the username and password fields empty")
+    public void i_leave_the_username_and_password_fields_empty() {
+        loginPage.enterUsername("");
+        loginPage.enterPassword("");
     }
 
     @Then("I should be logged in successfully")
     public void i_should_be_logged_in_successfully() {
-        System.out.println("Verifying successful login...");
-        try {
-            // Verifying successful login
-            String currentUrl = driver.getCurrentUrl();
-            Assert.assertEquals("https://www.saucedemo.com/inventory.html", currentUrl);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        String currentUrl = driver.getCurrentUrl();
+        Assert.assertEquals("https://www.saucedemo.com/inventory.html", currentUrl);
     }
 
     @Then("I should see an error message")
     public void i_should_see_an_error_message() {
-        System.out.println("Verifying error message...");
-        try {
-            // Verifying error message is displayed when login fails
-            boolean errorMessageDisplayed = driver.findElement(By.className("error-message-container")).isDisplayed();
-            Assert.assertTrue(errorMessageDisplayed);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Assert.assertTrue(loginPage.isErrorMessageDisplayed());
     }
-
 
     @After
     public void closeBrowser() {
-        // Close the browser after scenario execution
-        System.out.println("Closing the browser...");
         if (driver != null) {
             driver.quit();
         }
