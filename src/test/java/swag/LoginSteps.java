@@ -9,7 +9,9 @@ import io.cucumber.java.en.When;
 import java.io.IOException;
 
 import org.junit.Assert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 public class LoginSteps {
 
@@ -101,6 +103,21 @@ public class LoginSteps {
     @Then("I should see an error message")
     public void i_should_see_an_error_message() {
         Assert.assertTrue(loginPage.isErrorMessageDisplayed());
+    }
+
+    @Then("I should see an error message password invalid")
+    public void i_should_see_an_error_message_password_invalid() {
+        // Locate the error message element
+        WebElement errorMessageElement = driver.findElement(By.className("error-message-container"));
+
+        // Extract the text from the error message element
+        String actualErrorMessage = errorMessageElement.getText();
+
+        // Define the expected error message
+        String expectedErrorMessage = "Epic sadface: Username and password do not match any user in this service";
+
+        // Assert that the actual error message matches the expected error message
+        Assert.assertEquals(expectedErrorMessage, actualErrorMessage);
     }
 
     @After

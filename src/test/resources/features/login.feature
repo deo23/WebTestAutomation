@@ -3,31 +3,28 @@ Feature: User Login
   I want to be able to login to my account
   So that I can access my personalized content
 
-@runThis
+  @TC1
   Scenario: Successful login
     Given I am on the login page
     When I enter my username and password
     And I click the login button
     Then I should be logged in successfully
 
-  # Scenario: Failed login
-  #   Given I am on the login page
-  #   When I enter invalid username and/or password
-  #   And I click the login button
-  #   Then I should see an error message
-
+  @TC2
   Scenario: Failed login with unregistered password
     Given I am on the login page
     When I enter my username and an unregistered password
     And I click the login button
-    Then I should see an error message
+    Then I should see an error message password invalid
 
+  @TC3
   Scenario: Failed login with unregistered username
     Given I am on the login page
     When I enter an unregistered username and my password
     And I click the login button
     Then I should see an error message
 
+  @TC4
   Scenario: Failed login with empty username
     Given I am on the login page
     When I leave the username field empty
@@ -35,6 +32,7 @@ Feature: User Login
     And I click the login button
     Then I should see an error message
 
+  @TC5
   Scenario: Failed login with empty password
     Given I am on the login page
     When I enter my username
@@ -42,6 +40,7 @@ Feature: User Login
     And I click the login button
     Then I should see an error message
 
+  @TC6
   Scenario: Failed login with empty username and password
     Given I am on the login page
     When I leave the username and password fields empty

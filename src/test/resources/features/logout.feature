@@ -3,6 +3,7 @@ Feature: User Logout
   I want to be able to logout from my account
   So that I can securely end my session
 
+  @TC7
   Scenario: Logout from the application
     Given I am logged in
     When I click the burger menu
