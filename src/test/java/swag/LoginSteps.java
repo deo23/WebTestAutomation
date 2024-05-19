@@ -19,7 +19,7 @@ public class LoginSteps {
         System.out.println("Opening the login page...");
         try {
             // Setting up WebDriver for Chrome
-            System.setProperty("webdriver.chrome.driver", "/home/dafanf/Downloads/ChromeDriver/chromedriver-linux64/chromedriver");
+            System.setProperty("webdriver.chrome.driver", "D:\\chromedriver-win64");
 
             // Launch Chrome browser
             driver = new ChromeDriver();
