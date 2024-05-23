@@ -1,10 +1,9 @@
-package swag;
-
-import com.swaglabs.pages.HomePage;
+package swaglabs.steps;
 
 import io.cucumber.java.After;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
+import swaglabs.pages.HomePage;
 import io.cucumber.java.en.Then;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;

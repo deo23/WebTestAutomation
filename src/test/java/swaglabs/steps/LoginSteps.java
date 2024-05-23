@@ -1,10 +1,11 @@
-package swag;
+package swaglabs.steps;
 
-import com.swaglabs.pages.LoginPage;
 import io.cucumber.java.After;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import swaglabs.pages.LoginPage;
+import swaglabs.utils.ChromeDriverSetup;
 
 import java.io.IOException;
 
@@ -100,11 +101,6 @@ public class LoginSteps {
         Assert.assertEquals("https://www.saucedemo.com/inventory.html", currentUrl);
     }
 
-    @Then("I should see an error message")
-    public void i_should_see_an_error_message() {
-        Assert.assertTrue(loginPage.isErrorMessageDisplayed());
-    }
-
     @Then("I should see an error message password invalid")
     public void i_should_see_an_error_message_password_invalid() {
         // Locate the error message element
@@ -115,6 +111,66 @@ public class LoginSteps {
 
         // Define the expected error message
         String expectedErrorMessage = "Epic sadface: Username and password do not match any user in this service";
+
+        // Assert that the actual error message matches the expected error message
+        Assert.assertEquals(expectedErrorMessage, actualErrorMessage);
+    }
+
+    @Then("I should see an error message username invalid")
+    public void i_should_see_an_error_message_username_invalid() {
+        // Locate the error message element
+        WebElement errorMessageElement = driver.findElement(By.className("error-message-container"));
+
+        // Extract the text from the error message element
+        String actualErrorMessage = errorMessageElement.getText();
+
+        // Define the expected error message
+        String expectedErrorMessage = "Epic sadface: Username and password do not match any user in this service";
+
+        // Assert that the actual error message matches the expected error message
+        Assert.assertEquals(expectedErrorMessage, actualErrorMessage);
+    }
+
+    @Then("I should see an error message empty username")
+    public void i_should_see_an_error_message_username_is_required() {
+        // Locate the error message element
+        WebElement errorMessageElement = driver.findElement(By.className("error-message-container"));
+
+        // Extract the text from the error message element
+        String actualErrorMessage = errorMessageElement.getText();
+
+        // Define the expected error message
+        String expectedErrorMessage = "Epic sadface: You Need Username";
+
+        // Assert that the actual error message matches the expected error message
+        Assert.assertEquals(expectedErrorMessage, actualErrorMessage);
+    }
+
+    @Then("I should see an error message empty password")
+    public void i_should_see_an_error_message_password_is_required() {
+        // Locate the error message element
+        WebElement errorMessageElement = driver.findElement(By.className("error-message-container"));
+
+        // Extract the text from the error message element
+        String actualErrorMessage = errorMessageElement.getText();
+
+        // Define the expected error message
+        String expectedErrorMessage = "Epic sadface: You Need Password";
+
+        // Assert that the actual error message matches the expected error message
+        Assert.assertEquals(expectedErrorMessage, actualErrorMessage);
+    }
+
+    @Then("I should see an error message empty username and password")
+    public void i_should_see_an_error_message_username_is_required_and_password_is_required() {
+        // Locate the error message element
+        WebElement errorMessageElement = driver.findElement(By.className("error-message-container"));
+
+        // Extract the text from the error message element
+        String actualErrorMessage = errorMessageElement.getText();
+
+        // Define the expected error message
+        String expectedErrorMessage = "Epic sadface: You Need Username & Password";
 
         // Assert that the actual error message matches the expected error message
         Assert.assertEquals(expectedErrorMessage, actualErrorMessage);

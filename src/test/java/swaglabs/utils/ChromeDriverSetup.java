@@ -1,4 +1,4 @@
-package swag;
+package swaglabs.utils;
 
 import java.io.*;
 import java.net.URL;
